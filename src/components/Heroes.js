@@ -24,54 +24,37 @@ export default function Heroes() {
       // console.log(router.query.name);
 
       const res = await fetch(
-        `https://gateway.marvel.com:443/v1/public/characters?nameStartsWith=${router.query.name}&apikey=${publicKey}&ts=${ts}&hash=${hash}&limit=1`
+        `https://gateway.marvel.com:443/v1/public/characters?apikey=${publicKey}&ts=${ts}&hash=${hash}&limit=100&offset=190`
       );
 
       const data = await res.json();
-      setInfo(data.data.results[0]);
+      setInfo(data.data.results);
+      console.log(data.data.results);
     }
     loadCharacter();
   }, [router.query.name]);
   return (
     <>
-    <div className=" sm:p-5 my-10 ">
-      <div class="ui three column grid">
-        <div class="column">
-          <div class="ui segment">
-            <Image
-              src={
-                info && info.thumbnail
-                  ? info.thumbnail.path + "." + info.thumbnail.extension
-                  : "https://images.unsplash.com/photo-1589652717521-10c0d092dea9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              }
-              alt="image matching the search term"
-            />
-          </div>
-        </div>
-        <div class="column">
-          <div class="ui segment">
-            <Image
-              src={
-                info && info.thumbnail
-                  ? info.thumbnail.path + "." + info.thumbnail.extension
-                  : "https://images.unsplash.com/photo-1589652717521-10c0d092dea9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              }
-              alt="image matching the search term"
-            />
-          </div>
-        </div>
-        <div class="column">
-          <div class="ui segment">
-            <Image
-              src={
-                info && info.thumbnail
-                  ? info.thumbnail.path + "." + info.thumbnail.extension
-                  : "https://images.unsplash.com/photo-1589652717521-10c0d092dea9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-              }
-              alt="image matching the search term"
-            />
-          </div>
-        </div>
+      <div className=" sm:p-5 my-10 ">
+        <div className="ui three column grid">
+        {info && Array.isArray(info) ? (
+          info.map((result) => (
+            <div className="column" key={result.id}>
+              <div className="ui segment">
+                <Image
+                  src={
+                    result && result.thumbnail
+                      ? result.thumbnail.path + "." + result.thumbnail.extension
+                      : "https://images.unsplash.com/photo-1589652717521-10c0d092dea9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  }
+                  alt="Marvel Characters"
+                />
+              </div>
+            </div>
+          ))
+        ) : (
+          <div>Loading...</div>
+        )}
       </div>
       </div>
     </>
