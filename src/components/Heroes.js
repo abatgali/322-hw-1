@@ -37,25 +37,33 @@ export default function Heroes() {
     <>
       <div className=" sm:p-5 my-10 ">
         <div className="ui three column grid">
-        {info && Array.isArray(info) ? (
-          info.map((result) => (
-            <div className="column" key={result.id}>
-              <div className="ui segment">
-                <Image
-                  src={
-                    result && result.thumbnail
-                      ? result.thumbnail.path + "." + result.thumbnail.extension
-                      : "https://images.unsplash.com/photo-1589652717521-10c0d092dea9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                  }
-                  alt="Marvel Characters"
-                />
-              </div>
-            </div>
-          ))
-        ) : (
-          <div>Loading...</div>
-        )}
-      </div>
+          {info && Array.isArray(info) ? (
+            info.map((result) =>
+              result?.thumbnail?.path !==
+              "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available" ? (
+                <div className="column" key={result.id}>
+                  <div className="ui segment">
+                    <Image
+                      src={
+                        result && result.thumbnail
+                          ? result.thumbnail.path +
+                            "." +
+                            result.thumbnail.extension
+                          : "https://images.unsplash.com/photo-1589652717521-10c0d092dea9?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                      }
+                      alt="Marvel Characters"
+                    />
+                  </div>
+                </div>
+              ) : (
+                // eslint-disable-next-line react/jsx-key
+                <div className="hidden"></div>
+              )
+            )
+          ) : (
+            <div>Loading...</div>
+          )}
+        </div>
       </div>
     </>
   );
