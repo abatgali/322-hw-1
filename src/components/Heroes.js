@@ -40,7 +40,8 @@ export default function Heroes() {
           {info && Array.isArray(info) ? (
             info.map((result) =>
               result?.thumbnail?.path !==
-              "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available" ? (
+              "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available" && 
+              result?.thumbnail?.path !== "http://i.annihil.us/u/prod/marvel/i/mg/f/60/4c002e0305708" ? (
                 <div className="column" key={result.id}>
                   <div className="ui segment">
                     <Image
